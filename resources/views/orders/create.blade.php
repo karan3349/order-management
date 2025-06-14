@@ -62,7 +62,11 @@
 
                         <hr>
                         <h5>Grand Total: ₹ <span id="grandTotal">0</span></h5>
-                        <button type="submit" class="btn btn-primary">Create</button>
+
+                        <div class="mt-6">
+                            <button type="submit"
+                                class="btn btn-primary bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Save</button>
+                        </div>
                     </form>
                 </div>
             </div>

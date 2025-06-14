@@ -1,41 +1,55 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Orders') }}
+        <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
+            {{ __('Order List') }}
         </h2>
     </x-slot>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <h1>Order List</h1>
-            <div class="flex justify-end mb-4">
 
-                <a href="{{ route('orders.create') }}" class="btn btn-primary ">Create Order</a>
+    <div class="py-10">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-xl font-semibold text-gray-700">All Orders</h1>
+                <a href="{{ route('orders.create') }}"
+                    class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md shadow-sm transition">
+                    + Create Order
+                </a>
             </div>
 
-            <table class="min-w-full table-auto border border-gray-200">
-                <thead class="bg-gray-100">
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Order Date</th>
-                        <th>Customer</th>
-                        <th>Total</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($orders as $order)
-                        <tr>
-                            <td>{{ $order->id }}</td>
-                            <td>{{ $order->created_at->format('Y-m-d H:i') }}</td>
-                            <td>{{ $order->customer->name }}</td>
-                            <td>{{ $order->grand_total }}</td>
-                            <td>
-                                <a href="{{ route('orders.show', $order->id) }}" class="btn btn-primary">View</a>
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <table class="min-w-full table-auto border border-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr class="text-sm text-left text-gray-600">
+                            <th class="px-6 py-3">Order ID</th>
+                            <th class="px-6 py-3">Order Date</th>
+                            <th class="px-6 py-3">Customer</th>
+                            <th class="px-6 py-3">Total</th>
+                            <th class="px-6 py-3 text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @forelse ($orders as $order)
+                        <tr class="hover:bg-gray-50 text-sm">
+                            <td class="px-6 py-4">{{ $order->id }}</td>
+                            <td class="px-6 py-4">{{ $order->created_at->format('Y-m-d H:i') }}</td>
+                            <td class="px-6 py-4">{{ $order->customer->name }}</td>
+                            <td class="px-6 py-4">₹{{ number_format($order->grand_total, 2) }}</td>
+                            <td class="px-6 py-4 text-center">
+                                <a href="{{ route('orders.show', $order->id) }}"
+                                    class="text-indigo-600 hover:text-indigo-800 font-medium">View</a>
                             </td>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                        @empty
+                        <tr>
+                            <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                                No orders found.
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
 </x-app-layout>
