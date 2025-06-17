@@ -29,4 +29,28 @@ class StoreOrderRequest extends FormRequest
             'order_items.*.total' => 'required|numeric|min:0',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'customer_id.required' => 'Please select a customer.',
+            'customer_id.exists' => 'The selected customer is invalid.',
+
+            'order_items.*.product_id.required' => 'Please select a product for each item.',
+            'order_items.*.product_id.exists' => 'The selected product is invalid.',
+
+            'order_items.*.quantity.required' => 'Please enter quantity for each item.',
+            'order_items.*.quantity.numeric' => 'Quantity must be a number.',
+            'order_items.*.quantity.min' => 'Quantity must be at least 1.',
+
+            'order_items.*.price.required' => 'Price is required.',
+            'order_items.*.price.numeric' => 'Price must be a number.',
+            'order_items.*.price.min' => 'Price cannot be negative.',
+
+            'order_items.*.total.required' => 'Total is required.',
+            'order_items.*.total.numeric' => 'Total must be a number.',
+            'order_items.*.total.min' => 'Total cannot be negative.',
+        ];
+    }
+
 }
